@@ -1,11 +1,14 @@
 {
   "server": "campus-customs (mcp_server/server.py, stdio, via .mcp.json)",
   "database": "data/campus_customs_new.db",
-  "transport_note": "Each tool was called one at a time with an MCP tools/call request over the server's stdio transport from Claude Code; no server functions were imported or called directly.",
+  "run_date": "2026-10-05",
+  "transport_note": "Each tool was called through the campus-customs MCP connection defined in the workspace .mcp.json (stdio, HW5/.venv/Scripts/python.exe HW5/mcp_server/server.py). Claude Code invoked the connected mcp__campus-customs__* tools directly. No Python, Bash or scripts were used to talk to the server. The database was not reset. The db_check entries come from a separate read-only SQLite query (mode=ro) of data/campus_customs_new.db, made only to verify the outputs.",
+  "state_note": "Results differ from the earlier smoke run because the working database has changed since then. Payment requests 1 (invoice 501, $840) and 2 (lease 1 rent, $2,400) were approved by Abby Jaye on 2026-08-31 (payments rows 1 and 2). As a result, invoice 501 is now paid and lease 1's next_due moved forward one month to 2026-10-02.",
   "tests": [
     {
-      "prompt": "Using the campus-customs MCP server, call check_stock for CC-HOOD-NAVY size M with qty_needed 20.",
+      "prompt": "Call check_stock for CC-HOOD-NAVY size M with qty_needed 20.",
       "tool": "check_stock",
+      "mcp_tool": "mcp__campus-customs__check_stock",
       "arguments": {
         "sku": "CC-HOOD-NAVY",
         "size": "M",
@@ -27,12 +30,13 @@
       "is_error": false,
       "db_check": {
         "matches": true,
-        "details": "Matches inventory row (CC-HOOD-NAVY, M): qty 8, Aisle A, name 'Basic Hoodie Big Yale'. Shortfall 20 - 8 = 12."
+        "details": "Matches inventory row (CC-HOOD-NAVY, M): name 'Basic Hoodie Big Yale', qty 8, location Aisle A. Shortfall 20 - 8 = 12, so it is not fully in stock."
       }
     },
     {
-      "prompt": "Using the campus-customs MCP server, call get_invoice_status for invoice 501.",
+      "prompt": "Call get_invoice_status for invoice 501.",
       "tool": "get_invoice_status",
+      "mcp_tool": "mcp__campus-customs__get_invoice_status",
       "arguments": {
         "invoice_id": 501
       },
@@ -40,36 +44,31 @@
         "found": true,
         "id": 501,
         "vendor_id": 1,
-        "amount": 840.0,
+        "amount": 840,
         "due_date": "2026-08-28",
-        "status": "open",
+        "status": "paid",
         "description": "Rush reprint CC-TEE-WHITE S",
         "vendor_name": "Bulldog Print Co",
         "vendor_specialty": "apparel reprint",
         "vendor_lead_days": 5,
         "today": "2026-08-31",
-        "is_open": true,
-        "is_overdue": true,
-        "days_overdue": 3,
-        "vendor_open_invoices": [
-          {
-            "id": 501,
-            "amount": 840.0,
-            "due_date": "2026-08-28"
-          }
-        ],
-        "vendor_blocked_from_shipping": true
+        "is_open": false,
+        "is_overdue": false,
+        "days_overdue": 0,
+        "vendor_open_invoices": [],
+        "vendor_blocked_from_shipping": false
       },
-      "tool_output_raw": "{\"found\":true,\"id\":501,\"vendor_id\":1,\"amount\":840.0,\"due_date\":\"2026-08-28\",\"status\":\"open\",\"description\":\"Rush reprint CC-TEE-WHITE S\",\"vendor_name\":\"Bulldog Print Co\",\"vendor_specialty\":\"apparel reprint\",\"vendor_lead_days\":5,\"today\":\"2026-08-31\",\"is_open\":true,\"is_overdue\":true,\"days_overdue\":3,\"vendor_open_invoices\":[{\"id\":501,\"amount\":840.0,\"due_date\":\"2026-08-28\"}],\"vendor_blocked_from_shipping\":true}",
+      "tool_output_raw": "{\"found\":true,\"id\":501,\"vendor_id\":1,\"amount\":840,\"due_date\":\"2026-08-28\",\"status\":\"paid\",\"description\":\"Rush reprint CC-TEE-WHITE S\",\"vendor_name\":\"Bulldog Print Co\",\"vendor_specialty\":\"apparel reprint\",\"vendor_lead_days\":5,\"today\":\"2026-08-31\",\"is_open\":false,\"is_overdue\":false,\"days_overdue\":0,\"vendor_open_invoices\":[],\"vendor_blocked_from_shipping\":false}",
       "is_error": false,
       "db_check": {
         "matches": true,
-        "details": "Matches invoices row 501 (vendor 1, $840.00, due 2026-08-28, open, 'Rush reprint CC-TEE-WHITE S') and vendors row 1 (Bulldog Print Co, apparel reprint, lead_days 5). desk.date_today = 2026-08-31, so 3 days overdue; 501 is vendor 1's only open invoice, so the vendor is blocked from shipping."
+        "details": "Matches invoices row 501 (vendor 1, $840.00, due 2026-08-28, status paid, 'Rush reprint CC-TEE-WHITE S') and vendors row 1 (Bulldog Print Co, apparel reprint, lead_days 5). desk.date_today = 2026-08-31. Vendor 1 has no unpaid invoices, so the vendor is not blocked from shipping. Paid via payments row 1 ($840, checking, approved by Abby Jaye on 2026-08-31)."
       }
     },
     {
-      "prompt": "Using the campus-customs MCP server, call get_lease_rent_due for lease 1.",
+      "prompt": "Call get_lease_rent_due for lease 1.",
       "tool": "get_lease_rent_due",
+      "mcp_tool": "mcp__campus-customs__get_lease_rent_due",
       "arguments": {
         "lease_id": 1
       },
@@ -78,18 +77,18 @@
         "id": 1,
         "space_name": "Chapel Street shop",
         "landlord": "Elm City Properties",
-        "monthly_rent": 2400.0,
-        "next_due": "2026-09-02",
+        "monthly_rent": 2400,
+        "next_due": "2026-10-02",
         "notes": null,
         "today": "2026-08-31",
-        "days_until_due": 2,
+        "days_until_due": 32,
         "rent_status": "upcoming"
       },
-      "tool_output_raw": "{\"found\":true,\"id\":1,\"space_name\":\"Chapel Street shop\",\"landlord\":\"Elm City Properties\",\"monthly_rent\":2400.0,\"next_due\":\"2026-09-02\",\"notes\":null,\"today\":\"2026-08-31\",\"days_until_due\":2,\"rent_status\":\"upcoming\"}",
+      "tool_output_raw": "{\"found\":true,\"id\":1,\"space_name\":\"Chapel Street shop\",\"landlord\":\"Elm City Properties\",\"monthly_rent\":2400,\"next_due\":\"2026-10-02\",\"notes\":null,\"today\":\"2026-08-31\",\"days_until_due\":32,\"rent_status\":\"upcoming\"}",
       "is_error": false,
       "db_check": {
         "matches": true,
-        "details": "Matches leases row 1 (Chapel Street shop, Elm City Properties, $2,400.00/month, next_due 2026-09-02, notes NULL). desk.date_today = 2026-08-31, so 2 days until due (upcoming)."
+        "details": "Matches leases row 1 (Chapel Street shop, Elm City Properties, $2,400.00/month, next_due 2026-10-02, notes NULL). From desk.date_today 2026-08-31 to 2026-10-02 is 32 days, so rent is upcoming. next_due moved forward from 2026-09-02 after the rent payment was approved (payments row 2)."
       }
     }
   ]

@@ -111,7 +111,13 @@ A log of the prompts I typed into my vibe coder (Claude Code) for each problem, 
 
 > I'm in HW5. Please just do it.
 
-*What was lacking:* The session had started outside the HW5 folder, so the campus-customs MCP server from `.mcp.json` wasn't loaded and the tools couldn't be called until I insisted. They were then called over the server's MCP stdio transport.
+*What was lacking:* The session had started outside the HW5 folder, so the campus-customs MCP server from `.mcp.json` wasn't loaded. That attempt reached the server through a hand-written script over its stdio transport rather than through Claude Code's MCP connection.
+
+**Follow-up prompt 2:**
+
+> Redo the Problem 4 smoke test using the campus-customs MCP tools connected to this session. Don't use Python, Bash or scripts to talk to the server; if those tools aren't available, stop and tell me. Call `check_stock` for CC-HOOD-NAVY size M with qty_needed 20, `get_invoice_status` for invoice 501, and `get_lease_rent_due` for lease 1. Overwrite `output/mcp_smoke.json` with one entry per tool containing the prompt I asked, the tool name, and the exact tool output, and note that the calls went through the `.mcp.json` connection. Confirm each output matches `data/campus_customs_new.db`. Don't reset the database and don't push anything.
+
+*What was lacking:* The earlier evidence didn't clearly show that the session's connected MCP tools had been called, and it no longer matched the working database (invoice 501 and lease 1 rent were paid on 2026-08-31 after it was saved). The redo used the `mcp__campus-customs__*` tools directly.
 
 ---
 
