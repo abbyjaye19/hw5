@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Campus Customs: Resolved Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cinzel:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy-900: #071528; --navy-800: #0b1f3a; --navy-700: #12305a;
+    --ink: #14223a; --paper: #f7f5ef; --white: #fff;
+    --gold: #c9a54b; --gold-bright: #e7cf8a; --gold-deep: #9c7a2c;
+    --silver: #c3c9d2; --silver-light: #e6e9ee; --silver-dark: #8a93a1; --muted: #5d6b80;
+    --display: 'Cormorant Garamond', Georgia, serif; --caps: 'Cinzel', Georgia, serif;
+    --ui: 'Inter', 'Segoe UI', system-ui, sans-serif; --mono: 'IBM Plex Mono', Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--ui); color: var(--ink); background: var(--paper); line-height: 1.5; }
+  header { text-align: center; color: var(--white); padding: 1.6rem 1.5rem 1.4rem; background: linear-gradient(180deg, var(--navy-800), var(--navy-900)); border-bottom: 3px solid var(--gold); }
+  .crest { display: inline-grid; place-items: center; width: 3.2rem; height: 3.2rem; border-radius: 50%; font-family: var(--display); font-weight: 700; font-size: 1.25rem; color: var(--gold); border: 2px solid var(--gold); box-shadow: inset 0 0 0 3px var(--navy-800), inset 0 0 0 4px var(--gold-deep); }
+  .eyebrow { font-family: var(--caps); color: var(--gold-bright); letter-spacing: .22em; text-transform: uppercase; font-size: .68rem; margin: .4rem 0 0; }
+  h1 { font-family: var(--display); font-size: 2.4rem; margin: .2rem 0 .3rem; }
+  .sub { color: var(--silver); max-width: 48rem; margin: 0 auto; }
+  .ledger { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+  .ledger span { border: 1px solid rgba(195,201,210,.4); border-radius: 999px; padding: .25rem .8rem; font-size: .8rem; color: var(--silver-light); }
+  .ledger b { color: var(--gold-bright); font-family: var(--mono); font-weight: 500; }
+  nav { display: flex; gap: .4rem; justify-content: center; padding: .9rem; position: sticky; top: 0; background: rgba(247,245,239,.95); border-bottom: 1px solid var(--silver); z-index: 2; }
+  nav a { font-family: var(--caps); font-size: .8rem; letter-spacing: .08em; color: var(--navy-800); text-decoration: none; border: 1px solid var(--silver); background: var(--white); padding: .45rem 1rem; border-radius: 4px; }
+  nav a:hover { border-color: var(--gold); }
+  main { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+  section { margin-bottom: 2.5rem; scroll-margin-top: 4.5rem; }
+  .card { background: var(--white); border: 1px solid var(--silver); border-radius: 6px; padding: 1.1rem 1.3rem; box-shadow: 0 8px 24px rgba(11,31,58,.08); }
+  .card h2 { font-family: var(--display); font-size: 1.7rem; color: var(--navy-800); margin: 0 0 .2rem; }
+  .tag { font-family: var(--caps); font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; background: var(--navy-800); color: var(--gold-bright); border: 1px solid var(--gold); padding: .15rem .55rem; border-radius: 3px; vertical-align: middle; }
+  .outcome { margin: .5rem 0 .6rem; }
+  .meta { display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; font-size: .82rem; color: var(--muted); margin-bottom: .9rem; }
+  .meta b { color: var(--navy-800); }
+  .shot { display: block; width: 100%; border: 1px solid var(--silver-dark); border-radius: 4px; box-shadow: 0 10px 30px rgba(11,31,58,.18); }
+  figcaption { font-size: .78rem; color: var(--muted); margin-top: .4rem; font-style: italic; }
+  footer { text-align: center; font-family: var(--caps); font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--silver-dark); padding-bottom: 2rem; }
+</style>
+</head>
+<body>
+<header>
+  <span class="crest">CC</span>
+  <p class="eyebrow">Campus Customs · Problem 9 full run</p>
+  <h1>The Resolved Board</h1>
+  <p class="sub">Screenshots of the React operations desk after the agent team (every agent on gpt-6-luna) resolved each ticket and a human signed the cheques. Each image is the live board at <code>http://localhost:5173/?ticket=…</code>.</p>
+  <div class="ledger">
+    <span>Starting balance <b>$3,400.00</b></span>
+    <span>Paid out <b>$3,248.00</b></span>
+    <span>Ending balance <b>$152.00</b></span>
+    <span>Approved by <b>Abby Jaye</b></span>
+  </div>
+</header>
+<nav><a href="#t101">Ticket 101</a><a href="#t102">Ticket 102</a><a href="#t103">Ticket 103</a></nav>
+<main>
+  <section id="t101" class="card">
+    <h2>No. 101 · Bulldog tee <span class="tag">Resolved</span></h2>
+    <p class="outcome">Size S was out of stock and Bulldog Print Co was blocked by overdue invoice 501. The team queued invoice 501 ($840) and a one-tee reprint PO ($8), and saved an honest draft to Tauhid. Both payments were approved; the tee is expected about 2026-09-05.</p>
+    <div class="meta"><span>Delegations: <b>Boss → Inventory → Accounting → Customer Service</b></span><span>Cash change: <b>−$848.00</b></span><span>Draft: <b>#1</b></span></div>
+    <figure><img class="shot" src="screenshots/board_101.png" alt="React board showing ticket 101 resolved" /><figcaption>Board for ticket 101: resolved seal, boardroom with filed reports, minutes, resolution, agent briefs, draft letter, and the Treasury ledger ending at $152.00.</figcaption></figure>
+  </section>
+
+  <section id="t102" class="card">
+    <h2>No. 102 · Rent due <span class="tag">Resolved</span></h2>
+    <p class="outcome">Facilities confirmed $2,400 due 2026-09-02. Rent was already queued (request #2), so no duplicate was made. Rent was approved, and lease 1 now falls due 2026-10-02.</p>
+    <div class="meta"><span>Delegations: <b>Boss → Facilities, Boss → Accounting</b></span><span>Cash change: <b>−$2,400.00</b></span><span>Draft: <b>none</b></span></div>
+    <figure><img class="shot" src="screenshots/board_102.png" alt="React board showing ticket 102 resolved" /><figcaption>Board for ticket 102: Facilities and Accounting lit at the table; Inventory and Customer Service idle.</figcaption></figure>
+  </section>
+
+  <section id="t103" class="card">
+    <h2>No. 103 · Bulk hoodie discount <span class="tag">Resolved</span></h2>
+    <p class="outcome">Offer $48 each ($960 for 20, 54.2% margin). 8 are available now; the other 12 can't be committed because the $264 restock would exceed the remaining cash by $112. No purchase order was created.</p>
+    <div class="meta"><span>Delegations: <b>Boss → Inventory → Accounting → Customer Service</b></span><span>Cash change: <b>$0.00</b></span><span>Draft: <b>#2</b></span></div>
+    <figure><img class="shot" src="screenshots/board_103.png" alt="React board showing ticket 103 resolved" /><figcaption>Board for ticket 103: the Boss's $48 decision, Accounting's two margin checks, and the draft to the Yale AI Club.</figcaption></figure>
+  </section>
+</main>
+<footer>Agents prepare · humans sign · every step recorded in the audit trail</footer>
+</body>
+</html>
