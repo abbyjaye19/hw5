@@ -242,7 +242,7 @@ All shop facts reach the agents through this server over `data/campus_customs_ne
 
 **Limits that keep token use in check**
 - **One model** (`gpt-6-luna`) for every agent. The model guard refuses any response from another model.
-- **Per-ticket caps** shared across all delegated runs: 30 model requests and 150k total tokens (`UsageLimits`). `max_tokens` = 1,200 per response.
+- **Per-ticket caps** shared across all delegated runs: 30 model requests and 150k total tokens (`UsageLimits`). `max_tokens` = 4,000 per response (gpt-6-luna counts its reasoning toward this cap).
 - **Delegation caps:** at most 6 delegations per ticket, depth ≤ 2, no self-delegation, no delegating back up the chain (prevents ping-pong loops).
 - **Prompts tell agents to be brief:** fewest tool calls, one pass of delegation (the Boss aims for ≤ 4), no repeated calls, short structured reports.
 - **Small, precomputed tool results:** for example `check_margin` and `get_cash_position` do the math server-side, so agents don't need extra reasoning turns. Long text in the audit trail is clipped.
